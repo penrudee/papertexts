@@ -41,9 +41,7 @@ def favicon():
 @app.route("/index")
 
 def index():
-    contents=Content.query.order_by(Content.id.desc()).paginate(
-        page=1,per_page=3
-    )
+    contents=Content.query.order_by(Content.id.desc())
 
    
     return render_template('index.html',
