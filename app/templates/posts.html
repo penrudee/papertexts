@@ -8,13 +8,22 @@
 
 <main id="main-content" class="astro-hsp6otuf">
     <h1 class="astro-hsp6otuf">Posts</h1>
+    
     <p class="astro-hsp6otuf">All the articles I've posted.</p>
     <ul>
         {% for c in contents %}
         <li class="my-6"><a href="{{url_for('content',id=c.id)}}"
                 class="inline-block decoration-dashed focus-visible:no-underline focus-visible:underline-offset-0 font-medium text-lg text-skin-accent underline-offset-4">
                 <h2 style="view-transition-name:how-to-use-git-hooks-to-set-created-and-modified-dates"
-                    class="decoration-dashed font-medium text-lg hover:underline">{{c.subject}}</h2>
+                    class="decoration-dashed font-medium text-lg hover:underline">
+                    {{c.subject}}
+                    &ensp;
+                    {% if current_user.is_authenticated %}
+                    <span>
+                        <a href="{{url_for('edit',id=c.id)}}">Edit</a>
+                    </span>
+                    {% endif %}
+                </h2>
             </a>
             <div class="flex items-center opacity-80 space-x-2 undefined"><svg xmlns="http://www.w3.org/2000/svg"
                     class="inline-block fill-skin-base h-6 min-w-[1.375rem] scale-90 w-6" aria-hidden="true">
