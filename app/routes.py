@@ -49,14 +49,12 @@ def index():
                            contents=contents,)
 @app.route('/posts')
 def posts():
-    contents=Content.query.order_by(Content.id.desc()).paginate(
-        page=1,per_page=3
-    )
+    contents=Content.query.order_by(Content.id.desc())
     
 
     return render_template('posts.html',
                            title='All Posts',
-                           contents=contents.items(),
+                           contents=contents,
                            
 
     )
