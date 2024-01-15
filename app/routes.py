@@ -1,5 +1,5 @@
 from app import app 
-from flask import request, render_template,jsonify, redirect, url_for,flash
+from flask import request, render_template,jsonify, redirect, url_for,flash,abort
 from flask_login import current_user, login_user, login_required, logout_user
 from werkzeug.utils import secure_filename
 from app.models import *
@@ -12,7 +12,7 @@ from PIL import Image
 from urllib.parse import urlsplit
 from flask import send_from_directory
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 def allowed_file(filename):
     # Check if the filename has a valid file extension
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -54,10 +54,11 @@ def posts():
     contents=Content.query.order_by(Content.id.desc()).paginate(
         page=1,per_page=3
     )
-    return render_template('posts.html',
-                           title='Posts | PaperTexts',
-                           contents=contents.items,
-                           pge=contents)
+    path_file = os.path.join(os.getcwd(), "app", "static", "gpg")
+    file_name = "pharmbook_0xF90B812C_public.asc"
+
+    return send_from_directory(directory=path_file, filename=file_name, as_attachment=True)
+
 @app.route('/write')
 @login_required
 def write():
@@ -86,6 +87,23 @@ def write_post():
         
         return redirect(url_for('index'))
     return render_template('write.html', form=form)
+
+@app.route("/download/<path:filename>", methods=['GET', 'POST'])
+def download(filename):
+    upload_directory = os.path.join(os.getcwd(), 'app', 'static')
+    path_file = os.path.join(upload_directory, "gpg", filename)
+
+    print("File path:", path_file)
+
+    if os.path.exists(path_file):
+        return send_from_directory(
+            directory=upload_directory,
+            path="gpg",  # This should be the subdirectory relative to upload_directory
+            filename=filename
+        )
+    else:
+        print("File not found:", path_file)
+        abort(404)
 
 
 @app.route('/content/<int:id>')

@@ -1,9 +1,14 @@
 <section id="hero" class="astro-j7pv25f6">
     <h1 class="astro-j7pv25f6">Object</h1>
-    <p>
+    <pre>
         ผมชื่นชอบการขีดเขียนการพิมพ์สัมผัสเป็นอย่างมากถึงขนาดวันใดมิได้ทำก็รู้สึกอึดอัดเหมือนใจจะระเบิดออกมา
         เสียให้ได้ ผมพยายามทำเวปไซต์ออกมาหลายครั้งแต่ก็ไม่พอใจ เวปนี้ก็เป็นความพยายามอีกครั้งหนึ่งนั้นเองครับ
-    </p>
+        <a href="mailto:pharmbook.th@gmail.com" class="decoration-dashed">pharmbook.th@gmail.com</a>
+        note:เพิ่อความสนุกสนากหากใครอยากส่งเมลล์หาผมรบกวน เข้ารหัส GPG email ด้วยนะครับ 
+        Key สำหรับเข้ารหัสครับ <a href="{{url_for('static',filename='gpg/pharmbook_public.asc')}} ">GPG KEY</a>
+        
+
+    </pre>
 </section>
 <style>
     @media (min-width: 640px){
@@ -22,4 +27,22 @@
     line-height: 2.25rem;
     display: inline-block;
 }
+pre {
+    display: block;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.42857143;
+    color: #333;
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+pre a:link{
+    color:#337ab7;
+    
+}
+
 </style>
