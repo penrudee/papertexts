@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+  {% block link %}
+
+  {% endblock %}
+{% block content %}
+<div class="center">
+    <form action="" method="POST" enctype="multipart/form-data">
+        {{form.hidden_tag()}}
+        
+        <p>
+            {{form.img.label(class='form-control-label')}}
+            {{form.img(class='form-control')}}
+        </p>
+        <p>
+            {{form.title.label(class='form-control-label')}}
+            {{form.title(class='form-control')}}
+        </p>
+        <p>
+            {{form.content.label(class='form-control-label')}}
+            {{form.content(class='form-control')}}
+        </p>
+        <p>
+            {{form.submit(class='btn btn-success')}}
+        </p>
+    </form>
+</div>
+
+{% endblock %}

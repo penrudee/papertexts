@@ -58,6 +58,26 @@ def posts():
                            
 
     )
+@app.route("/edit/<int:id>",methods=['GET','POST'])
+def edit(id):
+    content=Content.query.filter_by(id=id).first()
+    form=WriteForm()
+    if request.method=='POST':
+
+        content.subject=form.title.data 
+        content.content=form.content.data 
+        content.timestamp = datetime.datetime.now()
+        db.session.add(content)
+        db.session.commit()
+        return redirect(url_for('posts'))
+    else:
+        form.title.data = content.subject 
+        form.content.data = content.content
+
+    return render_template("edit.html",
+                           title='Edit Post',
+                           form=form
+                           )
 
 @app.route('/write')
 @login_required
@@ -133,26 +153,26 @@ def login():
     return render_template('login.html', title='Login | PaperTexts',form=form)
     
 
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if current_user.is_authenticated:
-        return redirect(url_for('index'))
-    form = RegistrationForm()
+# @app.route('/register', methods=['GET', 'POST'])
+# def register():
+#     if current_user.is_authenticated:
+#         return redirect(url_for('index'))
+#     form = RegistrationForm()
     
-    if request.method=='POST':
+#     if request.method=='POST':
         
-        user = User(username=form.username.data, 
-                    email=form.email.data,
-                    create_time=datetime.datetime.now(),
-                    avatar='avatar.png')
-        user.set_password(form.password.data)
-        db.session.add(user)
-        db.session.commit()
+#         user = User(username=form.username.data, 
+#                     email=form.email.data,
+#                     create_time=datetime.datetime.now(),
+#                     avatar='avatar.png')
+#         user.set_password(form.password.data)
+#         db.session.add(user)
+#         db.session.commit()
         
         
-        flash('Congratulations, you are now a registered user!')
-        return redirect(url_for('login'))
-    return render_template('register.html', title='Register | PaperTexts',form=form)
+#         flash('Congratulations, you are now a registered user!')
+#         return redirect(url_for('login'))
+#     return render_template('register.html', title='Register | PaperTexts',form=form)
 
 @app.route('/logout')
 @login_required
