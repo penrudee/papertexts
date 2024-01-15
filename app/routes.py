@@ -54,10 +54,14 @@ def posts():
     contents=Content.query.order_by(Content.id.desc()).paginate(
         page=1,per_page=3
     )
-    path_file = os.path.join(os.getcwd(), "app", "static", "gpg")
-    file_name = "pharmbook_0xF90B812C_public.asc"
+    
 
-    return send_from_directory(directory=path_file, filename=file_name, as_attachment=True)
+    return render_template('posts.html',
+                           title='All Posts',
+                           contents=contents.items(),
+                           
+
+    )
 
 @app.route('/write')
 @login_required
